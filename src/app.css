@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+@plugin "daisyui" {
+	themes:
+		dim --default,
+		dim --prefersdark;
+}
+
+@theme {
+	--header-size: 46px;
+}

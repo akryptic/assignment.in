@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres
+    restart: no
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ass
+      POSTGRES_PASSWORD: secret_password
+      POSTGRES_DB: assignment
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+volumes:
+  pg-data:
