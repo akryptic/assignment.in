@@ -130,7 +130,7 @@
 								</li>
 							{/if}
 							<li>
-								<form action="/app?/logout" method="POST">
+								<form action="/@me?/logout" method="POST">
 									<button
 										class="flex w-full cursor-pointer items-center gap-4 bg-error/25 px-8 py-3 text-error hover:bg-error/40"
 										type="submit"><LogOut size="24" /> Logout</button
