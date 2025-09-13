@@ -7,7 +7,7 @@ export async function handle({ event, resolve }) {
 	const session = await auth.api.getSession({
 		headers: event.request.headers
 	});
-	
+
 	// Make session and user available on server
 	if (session) {
 		event.locals.session = session.session;
