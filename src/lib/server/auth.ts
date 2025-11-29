@@ -4,6 +4,7 @@ import { redirect } from '@sveltejs/kit';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db } from './db';
+import { sveltekitCookies } from 'better-auth/svelte-kit';
 
 export const auth = betterAuth({
 	baseURL: env.BETTER_AUTH_URL,
@@ -32,6 +33,18 @@ export const auth = betterAuth({
 			isManager: {
 				type: 'boolean',
 				required: true
+			},
+			dob: {
+				type: 'date',
+				required: true
+			},
+			phone: {
+				type: 'string',
+				required: true
+			},
+			gender: {
+				type: 'string',
+				required: true
 			}
 		}
 	},
@@ -39,7 +52,8 @@ export const auth = betterAuth({
 		database: {
 			generateId: false
 		}
-	}
+	},
+	plugins: [sveltekitCookies(getRequestEvent)]
 });
 
 export type Session = typeof auth.$Infer.Session;

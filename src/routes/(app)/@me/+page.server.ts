@@ -2,11 +2,27 @@ import { auth, checkAuth } from '$lib/server/auth';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { parse } from 'cookie';
+import { superValidate } from 'sveltekit-superforms';
+import { profileSchema, updateProfileSchema } from '$lib/form-schemas/profile-schema';
+import { zod } from 'sveltekit-superforms/adapters';
+import { db } from '$lib/server/db';
+import { users } from '$lib/server/db/schema';
+import { eq } from 'drizzle-orm';
 
 export const load = (async () => {
-	checkAuth();
+	const { user } = checkAuth();
 
-	return {};
+	return {
+		form: await superValidate(
+			{
+				name: user.name,
+				dob: (user.dob ? user.dob : new Date()).toISOString().split('T')[0],
+				phone: user.phone,
+				gender: user.gender as 'male' | 'female'
+			},
+			zod(profileSchema)
+		)
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -34,5 +50,27 @@ export const actions = {
 			return fail(400, { message: 'Error signing out.' });
 		}
 		redirect(303, '/auth');
+	},
+
+	completeProfile: async ({ request }) => {
+		const { user } = checkAuth();
+		const form = await superValidate(request, zod(updateProfileSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const { dob, gender, phone } = form.data;
+
+		await db
+			.update(users)
+			.set({
+				gender,
+				dob: new Date(dob),
+				phone
+			})
+			.where(eq(users.id, user.id));
+
+		return { form };
 	}
 } satisfies Actions;

@@ -1,6 +1,6 @@
 {
-  "id": "ba127f3e-5ac3-4637-b89b-d2e2d37cd0d9",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "9ee92b6c-3f29-4aaa-9379-0eb58fbe2f65",
+  "prevId": "ba127f3e-5ac3-4637-b89b-d2e2d37cd0d9",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -233,20 +233,20 @@
           "name": "dob",
           "type": "date",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "phone": {
           "name": "phone",
           "type": "varchar(10)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "gender": {
           "name": "gender",
           "type": "gender_enum",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "is_admin": {
           "name": "is_admin",

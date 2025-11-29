@@ -11,6 +11,6 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="min-h-screen w-full bg-base-100">
+<div class="min-h-screen w-full bg-base-100 font-poppins">
 	{@render children()}
 </div>

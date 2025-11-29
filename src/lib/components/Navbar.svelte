@@ -14,6 +14,7 @@
 	} from '@lucide/svelte';
 	import { fly } from 'svelte/transition';
 	import AppName from './AppName.svelte';
+	import { onMount } from 'svelte';
 
 	const { user } = $props();
 
@@ -21,6 +22,24 @@
 
 	beforeNavigate(() => {
 		isMenuOpen = false;
+	});
+
+	const handleKeyPress = (event: KeyboardEvent) => {
+		if (event.key === 'Escape') {
+			isMenuOpen = false;
+		}
+	};
+
+	onMount(() => {
+		if (browser) {
+			window.addEventListener('keydown', handleKeyPress);
+		}
+
+		return () => {
+			if (browser) {
+				window.removeEventListener('keydown', handleKeyPress);
+			}
+		};
 	});
 
 	$effect(() => {
@@ -76,10 +95,10 @@
 						role="dialog"
 						onkeydown={(e) => e.key === 'Escape' && (isMenuOpen = false)}
 						onclick={() => (isMenuOpen = false)}
-						class="fixed top-0 left-0 z-10 h-full w-full bg-black/50"
+						class="fixed top-0 left-0 z-[998] h-full w-full bg-black/50"
 					></div>
 					<div
-						class="absolute top-2 right-0 z-10 w-max overflow-hidden rounded-2xl bg-base-300 shadow-lg shadow-black/20 backdrop-blur"
+						class="absolute top-2 right-0 z-[999] w-max overflow-hidden rounded-2xl bg-base-300 shadow-lg shadow-black/20 backdrop-blur"
 						transition:fly={{ y: -20, duration: 100 }}
 					>
 						<div class="flex gap-3 px-5 py-3 text-gray-300">

@@ -1,4 +1,15 @@
-import { boolean, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import {
+	boolean,
+	date,
+	pgEnum,
+	pgTable,
+	text,
+	timestamp,
+	uuid,
+	varchar
+} from 'drizzle-orm/pg-core';
+
+export const genderEnum = pgEnum('gender_enum', ['male', 'female']);
 
 export const users = pgTable('users', {
 	id: uuid('id').primaryKey().defaultRandom(),
@@ -6,6 +17,9 @@ export const users = pgTable('users', {
 	email: varchar('email', { length: 255 }).unique().notNull(),
 	emailVerified: boolean('email_verified').notNull(),
 	image: text('image'),
+	dob: date('dob', { mode: 'date' }),
+	phone: varchar('phone', { length: 10 }),
+	gender: genderEnum(),
 	isAdmin: boolean('is_admin').notNull().default(false),
 	isManager: boolean('is_manager').notNull().default(false),
 	createdAt: timestamp('created_at').notNull().defaultNow(),

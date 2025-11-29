@@ -1,3 +1,4 @@
+CREATE TYPE "public"."gender_enum" AS ENUM('male', 'female');--> statement-breakpoint
 CREATE TABLE "accounts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"account_id" text NOT NULL,
@@ -32,6 +33,9 @@ CREATE TABLE "users" (
 	"email" varchar(255) NOT NULL,
 	"email_verified" boolean NOT NULL,
 	"image" text,
+	"dob" date NOT NULL,
+	"phone" varchar(10) NOT NULL,
+	"gender" "gender_enum" NOT NULL,
 	"is_admin" boolean DEFAULT false NOT NULL,
 	"is_manager" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
